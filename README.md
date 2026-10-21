@@ -39,14 +39,6 @@ Pour essayer la compilation avec Turbo Pascal, après avoir copié le source sou
 
 <pre><b>tpc</b> GRAMCLI.PAS</pre>
 
-<h2>Tests</h2>
-
-<ul>
-  <li>Le script suivant compile le programme et vérifie les rapports, les suggestions, les positions Unicode, les entrées invalides et les limites de traitement. Il contrôle aussi que le source est ASCII et que ses lignes ne dépassent pas 120 octets.</li>
-</ul>
-
-<pre>powershell -ExecutionPolicy Bypass -File tests/grammalecte-cli.ps1</pre>
-
 <h2>Licence</h2>
 
 <ul>

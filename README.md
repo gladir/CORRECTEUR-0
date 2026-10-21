@@ -69,6 +69,7 @@ Pour essayer la compilation avec Turbo Pascal, après avoir copié le source sou
 
 <pre>powershell -ExecutionPolicy Bypass -File tests/hunspell.ps1</pre>
 
+
 <h2>Licence</h2>
 
 <ul>

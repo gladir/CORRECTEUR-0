@@ -2,7 +2,7 @@
  @created: 2026
  @website(https://www.gladir.com/correcteur-0)
  @abstract(Target: Turbo Pascal 7, Free Pascal 3.2)
- @description: Correcteur orthographique autonome de francais et d'anglais. }
+ @description: Correcteur autonome de francais, d'anglais et d'allemand. }
 
 Program HUNSPELL;
 
@@ -38,7 +38,7 @@ Var
  UnitText: TUnit;
  I: Integer;
 { Source ASCII only. Numeric strings contain UTF-8 bytes, not DOS codes.
-  Built-in French and English vocabularies; no external files needed.
+  Built-in French, English and German vocabularies; no external files needed.
   Independent subset, not the Hunspell engine. No affix/compound engine.
   -U emits corrected UTF-8 on stdout; input bytes are never overwritten.
   Unknown words without a suggestion remain unchanged. Exit 0/2. }
@@ -58,6 +58,9 @@ Var
 Begin
  P := 1;
  While P <= Length(S) Do Begin
+  If Copy(S,P,3)=#225#186#158 Then Begin
+   Delete(S,P,3); Insert(#195#159,S,P)
+  End;
   B := Ord(S[P]);
   If B In [65..90] Then S[P] := Chr(B+32);
   If (B=195) And (P<Length(S)) Then Begin
@@ -370,11 +373,115 @@ Begin
  End
 End;
 
+Procedure GermanWords;
+Begin
+ Words(#195#150'l');
+ Words('ich du er sie es wir ihr mich dich ihn uns euch mir dir ihm ihnen');
+ Words('mein meine meinen meinem meiner meines dein deine sein seine unser unsere euer eure');
+ Words('der die das den dem des ein eine einen einem einer eines kein keine keinen keiner');
+ Words('dieser diese dieses diesen diesem jeder jede jedes alle alles beide viele viel wenige');
+ Words('etwas nichts man jemand niemand selbst bin bist ist sind seid war warst waren wart');
+ Words('gewesen sein habe hast hat haben habt hatte hatten gehabt werde wirst wird werden');
+ Words('wurde wurden worden und oder aber denn weil wenn als dass ob obwohl damit bevor');
+ Words('nachdem bis seit w'#195#164'hrend sondern also doch nur auch noch schon sehr mehr weniger');
+ Words('am an auf aus bei mit nach von zu zum zur f'#195#188'r '#195#188'ber unter vor hinter neben');
+ Words('zwischen');
+ Words('ohne gegen durch um im ins beim vom ja nein nicht bitte danke gern gerne heute morgen');
+ Words('gestern jetzt hier dort da immer nie niemals oft manchmal bald wieder zusammen allein');
+ Words('vielleicht wirklich leider einfach ziemlich besonders kann kannst k'#195#182'nnen');
+ Words('k'#195#182'nnt konnte');
+ Words('konnten darf darfst d'#195#188'rfen d'#195#188'rft muss musst m'#195#188'ssen m'#195#188'sst');
+ Words('musste mussten soll sollst');
+ Words('sollen sollt sollte sollten will willst wollen wollt wollte wollten m'#195#182'chte');
+ Words('m'#195#182'chten');
+ Words('gut gute guten guter gutes besser beste schlecht schlechte klein kleine kleinen');
+ Words('gro'#195#159' gro'#195#159'e gro'#195#159'en sch'#195#182'n sch'#195#182'ne sch'#195#182'nen');
+ Words('sch'#195#182'nes neu neue neuen alt alte alten jung junge');
+ Words('lang lange kurz kurze hoch hohe niedrig richtig falsch wichtig m'#195#182'glich');
+ Words('unm'#195#182'glich leicht');
+ Words('schwer schnell langsam fr'#195#188'h sp'#195#164't warm kalt hei'#195#159' frei offen');
+ Words('geschlossen m'#195#188'de gl'#195#188'cklich');
+ Words('traurig freundlich klar sauber leer voll Hallo hallo Welt Tag Tage Nacht N'#195#164'chte');
+ Words('Morgen');
+ Words('Abend Woche Wochen Monat Monate Jahr Jahre Stunde Stunden Minute Minuten Zeit Zeiten');
+ Words('Montag Dienstag Mittwoch Donnerstag Freitag Samstag Sonntag Januar Februar M'#195#164'rz April');
+ Words('Mai Juni Juli August September Oktober November Dezember Mensch Menschen Mann M'#195#164'nner');
+ Words('Frau Frauen Kind Kinder Junge Jungen M'#195#164'dchen Baby Familie Vater Mutter Eltern Bruder');
+ Words('Schwester Sohn Tochter Freund Freunde Freundin Name Namen Haus H'#195#164'user Wohnung Zimmer');
+ Words('T'#195#188'r T'#195#188'ren Fenster Tisch Stuhl Bett K'#195#188'che Garten Schule Schulen');
+ Words('Lehrer Lehrerin Sch'#195#188'ler');
+ Words('Sch'#195#188'lerin Klasse Universit'#195#164't Buch B'#195#188'cher Seite Seiten Brief Briefe');
+ Words('Wort W'#195#182'rter Satz S'#195#164'tze');
+ Words('Text Texte Sprache Sprachen Deutsch Englisch Franz'#195#182'sisch Grammatik Rechtschreibung');
+ Words('Fehler Korrektur W'#195#182'rterbuch Vorschlag Vorschl'#195#164'ge Datei Dateien Zeile Zeilen');
+ Words('Zeichen');
+ Words('Dokument Dokumente Programm Programme Computer Rechner Tastatur Maus Bildschirm Internet');
+ Words('Nachricht Nachrichten Daten System Ausgabe Eingabe Ergebnis Ergebnisse Befehl Befehle');
+ Words('Option Optionen Test Tests Version Hilfe Frage Fragen Antwort Antworten Problem Probleme');
+ Words('L'#195#182'sung L'#195#182'sungen Beispiel Beispiele Stadt St'#195#164'dte Land');
+ Words('L'#195#164'nder Dorf D'#195#182'rfer Stra'#195#159'e Stra'#195#159'en');
+ Words('Weg Wege Auto Autos Bus Zug Z'#195#188'ge Bahn Bahnhof Flugzeug Fahrrad Reise Reisen Arbeit');
+ Words('Beruf');
+ Words('B'#195#188'ro Geld Preis Gesch'#195#164'ft Laden Markt Wasser Brot Milch Kaffee Tee Apfel');
+ Words(#195#132'pfel Obst Gem'#195#188'se');
+ Words('Fleisch Fisch Ei Eier Reis Kartoffel Kartoffeln Tomate Tomaten K'#195#164'se Zucker Salz Essen');
+ Words('Fr'#195#188'hst'#195#188'ck Mittagessen Abendessen Hund Hunde Katze Katzen Tier Tiere Pferd');
+ Words('Vogel V'#195#182'gel');
+ Words('Baum B'#195#164'ume Blume Blumen Sonne Mond Stern Sterne Himmel Regen Schnee Wind Wetter See');
+ Words('Meer');
+ Words('Fluss Berg Berge Wald Feuer Erde Luft Hand H'#195#164'nde Fu'#195#159' F'#195#188#195#159'e');
+ Words('Kopf Auge Augen Ohr Ohren Herz');
+ Words('Leben Gesundheit Frieden Liebe Musik Lied Lieder Film Filme Bild Bilder Spiel Spiele');
+ Words('Sport Urlaub Deutschland Berlin M'#195#188'nchen '#195#150'sterreich Schweiz gehen geht gehe');
+ Words('gehst ging');
+ Words('gingen gegangen kommen kommt komme kommst kam kamen gekommen machen macht mache machst');
+ Words('gemacht sagen sagt sage sagst sagte gesagt sehen sieht sehe siehst sah gesehen h'#195#182'ren');
+ Words('h'#195#182'rt h'#195#182're geh'#195#182'rt lesen liest lese las gelesen schreiben schreibt');
+ Words('schreibe geschrieben');
+ Words('sprechen spricht spreche gesprochen lernen lernt lerne gelernt arbeiten arbeitet arbeite');
+ Words('gearbeitet spielen spielt spiele gespielt wohnen wohnt wohne gewohnt leben lebt lebe gelebt');
+ Words('lieben liebt liebe geliebt hei'#195#159'en hei'#195#159't hei'#195#159'e essen isst esse');
+ Words('gegessen trinken trinkt');
+ Words('trinke getrunken schlafen schl'#195#164'ft schlafe geschlafen fahren f'#195#164'hrt fahre');
+ Words('gefahren laufen');
+ Words('l'#195#164'uft laufe gelaufen geben gibt gebe gegeben nehmen nimmt nehme genommen finden');
+ Words('findet');
+ Words('finde gefunden wissen wei'#195#159' wusste gewusst denken denkt denke gedacht glauben glaubt');
+ Words('glaube geglaubt verstehen versteht verstehe verstanden fragen fragt frage gefragt');
+ Words('antworten antwortet helfen hilft helfe geholfen brauchen braucht brauche gebraucht suchen');
+ Words('sucht suche gesucht kaufen kauft kaufe gekauft bezahlen bezahlt '#195#182'ffnen');
+ Words(#195#182'ffnet ge'#195#182'ffnet');
+ Words('schlie'#195#159'en schlie'#195#159't geschlossen beginnen beginnt begonnen bleiben bleibt');
+ Words('geblieben bringen');
+ Words('bringt gebracht stehen steht gestanden sitzen sitzt gesessen liegen liegt gelegen tragen');
+ Words('tr'#195#164'gt getragen zeigen zeigt gezeigt benutzen benutzt korrigieren korrigiert');
+ Words('pr'#195#188'fen pr'#195#188'ft');
+ Words('gepr'#195#188'ft speichern speichert gespeichert '#195#164'ndern '#195#164'ndert');
+ Words('ge'#195#164'ndert funktionieren funktioniert');
+ Words('versuchen versucht freuen freut treffen trifft getroffen halten h'#195#164'lt gehalten');
+ Words('vergessen');
+ Words('vergisst bekommen bekommt erkl'#195#164'ren erkl'#195#164'rt bestellen bestellt');
+ Words('w'#195#188'nschen w'#195#188'nscht gew'#195#188'nscht');
+ Words('danken dankt gedankt begr'#195#188#195#159'en begr'#195#188#195#159't besuchen besucht reisen');
+ Words('reist gereist rot gr'#195#188'n blau');
+ Words('gelb schwarz wei'#195#159' braun grau rosa orange eins zwei drei vier f'#195#188'nf sechs');
+ Words('sieben acht neun');
+ Words('zehn elf zw'#195#182'lf hundert tausend null Million Millionen erste zweite dritte letzte');
+ Words('n'#195#164'chste');
+ Words('andere einigen einige deshalb deswegen trotzdem au'#195#159'erdem n'#195#164'mlich bisschen');
+ Words('Gr'#195#188#195#159'e Gru'#195#159);
+ Words('gr'#195#182#195#159'er gr'#195#182#195#159'te Spa'#195#159' au'#195#159'en s'#195#188#195#159);
+ Words('Fu'#195#159'g'#195#164'nger Fu'#195#159'ball Stra'#195#159'enbahnen Haust'#195#188'r');
+ Words('Sonnenlicht');
+ Words('Krankenhaus Geburtstag Wochenende Weihnachten');
+End;
+
 Procedure InitDictionary;
 Var A,B: Integer; W: TWord;
 Begin
  WordCount := 0;
- If DictName='fr_FR' Then FrenchWords Else EnglishWords;
+ If DictName='fr_FR' Then FrenchWords
+ Else If DictName='de_DE' Then GermanWords Else EnglishWords;
   { Sort once; binary lookup preserves accented dictionary spellings. }
  For A := 2 To WordCount Do Begin
   W := Dictionary[A]^; B := A-1;
@@ -388,9 +495,16 @@ End;
 
 Function Known(W: TWord): Boolean;
 Var
- L,H,M: Integer;
+ L,H,M,P: Integer;
  K: TWord;
+ AllUpper: Boolean;
 Begin
+ AllUpper := True;
+ For P := 1 To Length(W) Do Begin
+  If W[P] In ['a'..'z'] Then AllUpper := False;
+  If (Ord(W[P])=195) And (P<Length(W)) Then
+   If Ord(W[P+1]) In [159..182,184..190] Then AllUpper := False
+ End;
  W := Lower(W); L := 1; H := WordCount; Known := False;
  While L<=H Do Begin
   M := (L+H) Div 2; K := Lower(Dictionary[M]^);
@@ -398,7 +512,25 @@ Begin
    Known := True; Exit
   End;
   If W<K Then H := M-1 Else L := M+1
- End
+ End;
+ { In German uppercase text, SS is also a valid rendering of sharp s. }
+ If (DictName='de_DE') And AllUpper Then
+  For M := 1 To WordCount Do Begin
+   K := Lower(Dictionary[M]^); P := Pos(#195#159,K);
+   While P>0 Do Begin Delete(K,P,2); Insert('ss',K,P); P := Pos(#195#159,K) End;
+   If W=K Then Begin Known := True; Exit End
+  End
+End;
+
+Function RankingKey(W: TWord): TWord;
+Var P: Integer;
+Begin
+ W := Lower(W);
+ If DictName='de_DE' Then Begin
+  P := Pos(#195#159,W);
+  While P>0 Do Begin Delete(W,P,2); Insert('ss',W,P); P := Pos(#195#159,W) End
+ End;
+ RankingKey := Fold(W)
 End;
 
 Function Distance(A,B: TWord): Integer;
@@ -432,7 +564,7 @@ Begin
   If (P=1) And (B In [65..90]) Then FirstUpper := True;
   If (B=195) And (P<Length(Original)) Then Begin
    Inc(P); B := Ord(Original[P]);
-   If B In [160..182,184..190] Then AllUpper := False;
+   If B In [159..182,184..190] Then AllUpper := False;
    If (P=2) And (B In [128..150,152..158]) Then FirstUpper := True
   End;
   Inc(P)
@@ -444,6 +576,9 @@ Begin
    If B In [97..122] Then S[P] := Chr(B-32);
    If (B=195) And (P<Length(S)) Then Begin
     Inc(P); B := Ord(S[P]);
+    If B=159 Then Begin
+     Delete(S,P-1,2); Insert('SS',S,P-1)
+    End;
     If B In [160..182,184..190] Then S[P] := Chr(B-32)
    End
   End;
@@ -476,7 +611,7 @@ Var
  N,D,Limit: Integer;
  K,F,Preferred: TWord;
 Begin
- SuggestionCount := 0; W := Lower(W); F := Fold(W);
+ SuggestionCount := 0; W := Lower(W); F := RankingKey(W);
  Preferred := '';
  If DictName='fr_FR' Then Begin
  If W='bonjours' Then Preferred := 'bonjour';
@@ -484,6 +619,26 @@ Begin
  If W='malgres' Then Preferred := 'malgr'#195#169;
  If W='parmis' Then Preferred := 'parmi';
  If W='biensur' Then Preferred := 'bien s'#195#187'r';
+ End Else If DictName='de_DE' Then Begin
+  If W='hlo' Then Preferred := 'Hallo';
+  If W='wlet' Then Preferred := 'Welt';
+  If W='dsa' Then Preferred := 'das';
+  If W='udn' Then Preferred := 'und';
+  If W='nciht' Then Preferred := 'nicht';
+  If W='deutch' Then Preferred := 'deutsch';
+  If W='deutsh' Then Preferred := 'deutsch';
+  If W='strasse' Then Preferred := 'Stra'#195#159'e';
+  If W='grusse' Then Preferred := 'Gr'#195#188#195#159'e';
+  If W='gruesse' Then Preferred := 'Gr'#195#188#195#159'e';
+  If W='fuer' Then Preferred := 'f'#195#188'r';
+  If W='ueber' Then Preferred := #195#188'ber';
+  If W='schoen' Then Preferred := 'sch'#195#182'n';
+  If W='haeuser' Then Preferred := 'H'#195#164'user';
+  If W='koennen' Then Preferred := 'k'#195#182'nnen';
+  If W='moechte' Then Preferred := 'm'#195#182'chte';
+  If W='schones' Then Preferred := 'sch'#195#182'nes';
+  If W='bischen' Then Preferred := 'bisschen';
+  If W='nemlich' Then Preferred := 'n'#195#164'mlich'
  End Else Begin
   If W='teh' Then Preferred := 'the';
   If W='helo' Then Preferred := 'hello';
@@ -500,7 +655,7 @@ Begin
  If Preferred<>'' Then InsertSuggestion(Preferred,0);
  Limit := 2; If Length(F)<5 Then Limit := 1;
  For N := 1 To WordCount Do Begin
-  K := Fold(Dictionary[N]^);
+  K := RankingKey(Dictionary[N]^);
   If Abs(Length(F)-Length(K))<=Limit Then Begin
    D := Distance(F,K);
    If D<=Limit Then Begin
@@ -558,6 +713,7 @@ Var
 Begin
  B := Ord(S[1]);
  IsLetter := (B In [65..90,97..122]);
+ If S=#225#186#158 Then IsLetter := True;
  If Length(S)=2 Then Begin
   If B In [$C3..$CA] Then IsLetter := True;
   If (B=$C3) And (Ord(S[2]) In [$97,$B7]) Then IsLetter := False
@@ -605,13 +761,14 @@ Begin
 End;
 
 Procedure Help;Begin
- WriteLn('HUNSPELL 1.1 - Cette commande permet de lancer le correcteur autonome de francais et d''anglais.');
+ WriteLn('HUNSPELL 1.2 - Cette commande permet de lancer un correcteur autonome de francais, d''anglais et d''allemand.');
  WriteLn;
- WriteLn('Syntaxe: hunspell [-d fr_FR|en_US|en_GB] [-l | -U] document.txt');
+ WriteLn('Syntaxe: hunspell [-d fr_FR|en_US|en_GB|de_DE] [-l | -U] document.txt');
  WriteLn;
  WriteLn('  -d fr_FR      Lexique francais embarque (valeur par defaut)');
  WriteLn('  -d en_US      Lexique anglais americain embarque');
  WriteLn('  -d en_GB      Lexique anglais britannique embarque');
+ WriteLn('  -d de_DE      Lexique allemand embarque');
  WriteLn('  -l            Afficher seulement les mots suspects');
  WriteLn('  -U            Afficher le texte corrige par la premiere suggestion');
  WriteLn('  -h, --help    Aide');
@@ -632,11 +789,12 @@ BEGIN
    Help; Halt(0)
   End
   Else If (Arg='--version') Or (Arg='-v') Then Begin
-   WriteLn('HUNSPELL Pascal 1.1 (implementation independante)'); Halt(0)
+   WriteLn('HUNSPELL Pascal 1.2 (implementation independante)'); Halt(0)
   End Else If Arg='-D' Then Begin
    WriteLn('fr_FR (francais, embarque, lexique reduit)');
    WriteLn('en_US (anglais americain, embarque, lexique reduit)');
-   WriteLn('en_GB (anglais britannique, embarque, lexique reduit)'); Halt(0)
+   WriteLn('en_GB (anglais britannique, embarque, lexique reduit)');
+   WriteLn('de_DE (allemand, embarque, lexique reduit)'); Halt(0)
   End
   Else If Arg='-d' Then Begin
    Inc(I); If I>ParamCount Then Fail('dictionnaire manquant apres -d');
@@ -654,8 +812,8 @@ BEGIN
  If ParamCount=0 Then Begin
   Help; Halt(0)
  End;
- If (DictName<>'fr_FR') And (DictName<>'en_US') And (DictName<>'en_GB') Then
-  Fail('lexique inconnu: utiliser fr_FR, en_US ou en_GB');
+ If (DictName<>'fr_FR') And (DictName<>'en_US') And (DictName<>'en_GB') And
+    (DictName<>'de_DE') Then Fail('lexique inconnu: utiliser fr_FR, en_US, en_GB ou de_DE');
  If ListOnly And ReplaceWords Then Fail('-l et -U sont incompatibles');
  If FileName='' Then Fail('nom de fichier manquant');
  InitDictionary;

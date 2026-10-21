@@ -14,11 +14,19 @@ Voici la liste des différentes commandes proposées dans CORRECTEUR-0 :
     <td><b>GRAMMALECTE-CLI.PAS</b></td>
     <td>Cette commande permet de vérifier l'orthographe et certaines règles de grammaire d'un fichier de texte français, avec des suggestions et un rapport texte ou JSON.</td>
   </tr>
+  <tr>
+    <td><b>HUNSPELL.PAS</b></td>
+    <td>Cette commande permet de repérer les mots suspects dans un texte français, de proposer des corrections et de produire un texte corrigé par la première suggestion.</td>
+  </tr>
 </table>
 
 <h2>Remarques</h2>
 
 <ul>
+  <li>HUNSPELL.PAS : correcteur orthographique autonome avec un lexique français embarqué. Syntaxe : <code>HUNSPELL -d fr_FR document.txt</code> pour afficher les mots suspects avec leurs positions et jusqu'à cinq suggestions ; <code>HUNSPELL -d fr_FR -l document.txt</code> pour afficher seulement les mots suspects ; <code>HUNSPELL -d fr_FR -U document.txt</code> pour écrire le texte corrigé sur la sortie standard. Le fichier source reste intact. Pour enregistrer le résultat : <code>HUNSPELL -d fr_FR -U document.txt &gt; corrige.txt</code> (utiliser un fichier de destination différent).</li>
+  <li>HUNSPELL.PAS : <code>fr_FR</code> est le seul lexique disponible et le lexique par défaut. Les paramètres <code>-h</code>, <code>--help</code>, <code>-v</code>, <code>--version</code> et <code>-D</code> sont également disponibles. Un seul fichier est traité par invocation ; <code>-l</code> et <code>-U</code> sont incompatibles. Les mots sont vérifiés sans distinction de casse, mais les accents sont significatifs. Les suggestions tiennent compte des insertions, suppressions, substitutions, transpositions et de certaines fautes courantes ; la casse est conservée lors du remplacement.</li>
+  <li>HUNSPELL.PAS : implémentation indépendante et partielle de l'interface de Hunspell, sans interface interactive ni chargement de fichiers <code>.aff</code> ou <code>.dic</code>. Le lexique réduit peut signaler des mots français corrects ou des noms propres. Les règles d'affixes et de mots composés du moteur Hunspell complet ne sont pas reproduites. Les mots sans suggestion restent inchangés avec <code>-U</code>. Les contractions et mots avec trait d'union sont vérifiés par composants.</li>
+  <li>HUNSPELL.PAS : source ASCII avec codes numériques pour les accents, lignes de source limitées à 120 octets et seule unité <code>Dos</code>. Les fichiers sont lus en UTF-8, avec ou sans BOM ; <code>-U</code> conserve le BOM, les espaces, la ponctuation et les fins de ligne. Aucune limite de longueur de ligne n'est imposée ; les mots sont limités à 80 octets. Le code de sortie est 0 pour une analyse terminée, même avec des mots suspects, et 2 pour une erreur. Une erreur de lecture, d'encodage ou de longueur de mot peut laisser une sortie partielle.</li>
   <li>GRAMMALECTE-CLI.PAS : implémentation indépendante et partielle de l'interface de Grammalecte, avec un lexique embarqué et des règles de conjugaison, d'accord, d'homophones, de répétition et de ponctuation. Elle ne contient pas le moteur complet de Grammalecte. Les mots inconnus peuvent être des mots français corrects ou des noms propres ; les suggestions ne garantissent pas la correction du texte.</li>
   <li>Vérification d'un fichier : <code>GRAMMALECTE-CLI -f texte.txt</code>. Création d'un rapport avec suggestions : <code>GRAMMALECTE-CLI -ff texte.txt</code>, qui produit <code>texte.res.txt</code>. Le fichier source n'est pas modifié.</li>
   <li>Rapport JSON : <code>GRAMMALECTE-CLI -f texte.txt -j</code> pour l'afficher, ou <code>GRAMMALECTE-CLI -ff texte.txt -j</code> pour créer <code>texte.res.json</code>. Les suggestions disponibles sont incluses dans les deux formats.</li>
@@ -35,6 +43,14 @@ Pour compiler GRAMMALECTE-CLI.PAS avec Free Pascal en mode Turbo Pascal :
 
 <pre><b>fpc</b> -Mtp GRAMMALECTE-CLI.PAS</pre>
 
+Pour compiler HUNSPELL.PAS avec Free Pascal en mode Turbo Pascal :
+
+<pre><b>fpc</b> -Mtp HUNSPELL.PAS</pre>
+
+Pour essayer la compilation de HUNSPELL.PAS avec Turbo Pascal :
+
+<pre><b>tpc</b> HUNSPELL.PAS</pre>
+
 Pour essayer la compilation avec Turbo Pascal, après avoir copié le source sous le nom GRAMCLI.PAS :
 
 <pre><b>tpc</b> GRAMCLI.PAS</pre>
@@ -46,6 +62,12 @@ Pour essayer la compilation avec Turbo Pascal, après avoir copié le source sou
 </ul>
 
 <pre>powershell -ExecutionPolicy Bypass -File tests/grammalecte-cli.ps1</pre>
+
+<ul>
+  <li>Pour HUNSPELL.PAS, le script suivant vérifie la compilation, les trois modes, les suggestions accentuées, la casse, les positions, les longues lignes, la conservation du fichier source et le rejet des entrées invalides. Il contrôle également les lignes courtes et le source ASCII. La compilation a été vérifiée avec Free Pascal en mode Turbo Pascal ; Turbo Pascal 7 reste à tester directement.</li>
+</ul>
+
+<pre>powershell -ExecutionPolicy Bypass -File tests/hunspell.ps1</pre>
 
 <h2>Licence</h2>
 

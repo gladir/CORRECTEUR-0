@@ -2,7 +2,7 @@
  @created: 2026
  @website(https://www.gladir.com/correcteur-0)
  @abstract(Target: Turbo Pascal 7, Free Pascal 3.2)
- @description: Correcteur autonome de francais, anglais, allemand et espagnol. }
+ @description: Correcteur autonome de francais, anglais, allemand, espagnol et italien. }
 
 Program HUNSPELL;
 
@@ -38,7 +38,7 @@ Var
  UnitText: TUnit;
  I: Integer;
 { Source ASCII only. Numeric strings contain UTF-8 bytes, not DOS codes.
-  Built-in French, English, German and Spanish; no external files needed.
+  Built-in French, English, German, Spanish and Italian; no external files needed.
   Independent subset, not the Hunspell engine. No affix/compound engine.
   -U emits corrected UTF-8 on stdout; input bytes are never overwritten.
   Unknown words without a suggestion remain unchanged. Exit 0/2. }
@@ -638,13 +638,138 @@ Begin
  Words('t'#195#186' mi m'#195#173' te t'#195#169' de d'#195#169' se s'#195#169);
 End;
 
+Procedure ItalianWords;
+Begin
+ Words('io tu lui lei noi voi loro mi ti ci vi si s'#195#169' me te gli le lo la li ne');
+ Words('il i l un uno una un altro altra altri altre questo questa questi queste quello quella');
+ Words('quelli quelle ci'#195#178' ogni qualche qualsiasi ciascuno ciascuna tutto tutta tutti tutte');
+ Words('nessuno nessuna qualcuno qualcuna qualcosa niente nulla molto molta molti molte poco');
+ Words('poca pochi poche tanto tanta tanti tante troppo troppa troppi troppe stesso stessa');
+ Words('stessi stesse mio mia miei mie tuo tua tuoi tue suo sua suoi sue nostro nostra nostri');
+ Words('nostre vostro vostra vostri vostre chi che cui quale quali quanto quanta quanti quante');
+ Words('sono sei '#195#168' siamo siete era eri eravamo eravate erano fui fu fummo furono stato stata');
+ Words('stati state essere essendo sia siano sar'#195#160' saranno sarei sarebbe sarebbero');
+ Words('ho hai ha abbiamo avete hanno avevo aveva avevamo avevate avevano avuto avere avendo');
+ Words('abbia abbiano avr'#195#160' avranno avrei avrebbe ebbe ebbero sto stai sta stiamo state stanno');
+ Words('stavo stava stavano stato stare stia stiano e ed o oppure ma per'#195#178' perch'#195#169);
+ Words('poich'#195#169' quindi');
+ Words('dunque anche ancora gi'#195#160' sempre mai non n'#195#169' s'#195#172' no forse certamente');
+ Words('davvero proprio solo');
+ Words('soltanto quasi abbastanza cos'#195#172' pi'#195#185' meno troppo bene male meglio peggio come');
+ Words('dove quando');
+ Words('mentre se senza purch'#195#169' bench'#195#169' affinch'#195#169' cio'#195#168' oggi ieri');
+ Words('domani adesso ora prima dopo poi');
+ Words('presto tardi subito spesso talvolta qui qua l'#195#172' l'#195#160' dentro fuori sopra sotto');
+ Words('davanti');
+ Words('dietro vicino lontano insieme attraverso durante contro verso fino tra fra con su per');
+ Words('a ad da di in del dello della dei degli delle al allo alla ai agli alle dal dallo');
+ Words('dalla dai dagli dalle nel nello nella nei negli nelle sul sullo sulla sui sugli sulle');
+ Words('col coi d all dell dall nell sull quest quell sant c m t s v po');
+ Words('ciao buongiorno buonasera buonanotte arrivederci salve grazie prego favore scusa scusi');
+ Words('benvenuto benvenuta auguri salute piacere buono buona buoni buone buon cattivo cattiva');
+ Words('bello bella belli belle bel brutto brutta grande grandi piccolo piccola piccoli piccole');
+ Words('nuovo nuova nuovi nuove vecchio vecchia vecchi vecchie giovane giovani felice felici');
+ Words('triste tristi facile facili difficile difficili importante importanti possibile impossibile');
+ Words('necessario necessaria diverso diversa uguale uguali giusto giusta sbagliato sbagliata');
+ Words('vero vera falso falsa libero libera gratuito gratuita aperto aperta chiuso chiusa');
+ Words('lungo lunga corto corta alto alta basso bassa caldo calda freddo fredda veloce lento');
+ Words('lenta chiaro chiara pulito pulita vuoto vuota pieno piena pronto pronta sicuro sicura');
+ Words('mondo parola parole testo testi file documento documenti riga righe pagina pagine');
+ Words('lettera lettere frase frasi lingua lingue italiano italiana italiani italiane francese');
+ Words('inglese tedesco spagnolo grammatica ortografia errore errori correzione correzioni');
+ Words('correttore dizionario dizionari suggerimento suggerimenti programma programmi codice');
+ Words('sorgente computer sistema sistemi informazione informazioni dati ingresso uscita risultato');
+ Words('risultati rapporto rapporti prova prove versione versioni opzione opzioni comando comandi');
+ Words('schermo tastiera mouse rete internet sito siti messaggio messaggi posta elettronica');
+ Words('domanda domande risposta risposte problema problemi soluzione soluzioni esempio esempi');
+ Words('aiuto numero numeri nome nomi indirizzo indirizzi telefono telefoni giorno giorni notte');
+ Words('notti mattina pomeriggio sera settimana settimane mese mesi anno anni ora ore minuto');
+ Words('minuti secondo secondi tempo tempi luned'#195#172' marted'#195#172' mercoled'#195#172);
+ Words('gioved'#195#172' venerd'#195#172' sabato domenica');
+ Words('gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre');
+ Words('dicembre zero uno due tre quattro cinque sei sette otto nove dieci undici dodici cento');
+ Words('mille milione milioni primo prima primi prime ultimo ultima ultimi ultime prossimo');
+ Words('prossima persona persone uomo uomini donna donne bambino bambini bambina bambine ragazzo');
+ Words('ragazzi ragazza ragazze amico amici amica amiche famiglia famiglie padre madre genitori');
+ Words('figlio figli figlia figlie fratello fratelli sorella sorelle nonno nonna signore signora');
+ Words('casa case stanza stanze camera camere porta porte finestra finestre tavolo tavoli sedia');
+ Words('sedie letto letti cucina bagno bagni giardino giardini scuola scuole classe classi');
+ Words('studente studenti studentessa insegnante professore professoressa universit'#195#160' libro');
+ Words('libri');
+ Words('quaderno quaderni penna penne matita matite carta citt'#195#160' paese paesi strada strade via');
+ Words('vie');
+ Words('macchina macchine automobile automobili auto autobus treno treni aereo aerei nave navi');
+ Words('barca barche bicicletta biciclette viaggio viaggi stazione aeroporto ufficio ospedale');
+ Words('lavoro lavori denaro soldi prezzo prezzi negozio negozi mercato mercati azienda aziende');
+ Words('acqua pane latte caff'#195#168' t'#195#168' frutta mela mele arancia arance banana riso carne');
+ Words('pesce uovo');
+ Words('uova patata patate pomodoro pomodori formaggio zucchero sale olio cibo colazione pranzo');
+ Words('cena pasta pizza vino birra cane cani gatto gatti animale animali cavallo cavalli uccello');
+ Words('uccelli albero alberi fiore fiori bosco montagna montagne fiume fiumi mare spiaggia sole');
+ Words('luna stella stelle cielo terra pioggia neve vento fuoco aria mano mani piede piedi testa');
+ Words('occhio occhi orecchio orecchie cuore vita morte amore pace musica canzone canzoni film');
+ Words('fotografia fotografie foto immagine immagini gioco giochi sport squadra festa compleanno');
+ Words('Natale Italia Roma Milano Venezia Napoli Europa estate inverno primavera autunno rosso');
+ Words('rossa verde verdi blu azzurro azzurra giallo gialla bianco bianca nero nera grigio grigia');
+ Words('rosa marrone colore colori punto punti parte parti luogo luoghi cosa cose ragione ragioni');
+ Words('verit'#195#160' storia storie idea idee luce forza faccia forma forme qualit'#195#160);
+ Words('quantit'#195#160' capacit'#195#160);
+ Words('fare faccio fai fa facciamo fate fanno fatto facendo feci fece far'#195#178' far'#195#160);
+ Words('farebbe');
+ Words('andare vado vai va andiamo andate vanno andato andata andando venire vengo vieni viene');
+ Words('veniamo venite vengono venuto venuta dire dico dici dice diciamo dite dicono detto');
+ Words('parlare parlo parli parla parliamo parlate parlano parlato parlando leggere leggo leggi');
+ Words('legge leggiamo leggete leggono letto leggendo scrivere scrivo scrivi scrive scriviamo');
+ Words('scrivete scrivono scritto scrivendo vedere vedo vedi vede vediamo vedete vedono visto');
+ Words('guardare guardo guarda guardiamo guardano guardato ascoltare ascolto ascolta ascoltano');
+ Words('ascoltato sapere so sai sa sappiamo sapete sanno sapevo saputo conoscere conosco conosci');
+ Words('conosce conosciamo conoscete conoscono conosciuto pensare penso pensi pensa pensiamo');
+ Words('pensano pensato credere credo crede crediamo credono creduto capire capisco capisci');
+ Words('capisce capiamo capite capiscono capito comprendere comprendo comprende compreso');
+ Words('imparare imparo impara impariamo imparano imparato insegnare insegno insegna insegnato');
+ Words('volere voglio vuoi vuole vogliamo volete vogliono voluto vorrei vorrebbe potere posso');
+ Words('puoi pu'#195#178' possiamo potete possono potuto potrei potrebbe dovere devo devi deve');
+ Words('dobbiamo');
+ Words('dovete devono dovuto dovrei dovrebbe piacere piace piacciono piaciuto amare amo ama');
+ Words('amiamo amano amato mangiare mangio mangi mangia mangiamo mangiate mangiano mangiato');
+ Words('bere bevo bevi beve beviamo bevete bevono bevuto vivere vivo vivi vive viviamo vivete');
+ Words('vivono vissuto dormire dormo dormi dorme dormiamo dormite dormono dormito lavorare lavoro');
+ Words('lavori lavora lavoriamo lavorate lavorano lavorato studiare studio studi studia studiamo');
+ Words('studiate studiano studiato giocare gioco gioca giochiamo giocano giocato correre corro');
+ Words('corre corrono corso camminare cammino cammina camminano camminato comprare compro compra');
+ Words('comprano comprato vendere vendo vende vendono venduto pagare pago paga pagano pagato');
+ Words('dare do dai d'#195#160' diamo date danno dato prendere prendo prendi prende prendiamo prendono');
+ Words('preso portare porto porta portano portato mettere metto metti mette mettiamo mettono');
+ Words('messo uscire esco esci esce usciamo uscite escono uscito arrivare arrivo arriva arrivano');
+ Words('arrivato passare passo passa passano passato restare resto resta restano restato');
+ Words('lasciare lascio lascia lasciamo lasciano lasciato cercare cerco cerca cercano cercato');
+ Words('trovare trovo trovi trova troviamo trovano trovato aspettare aspetto aspetta aspettano');
+ Words('aspettato aiutare aiuto aiuta aiutiamo aiutano aiutato aprire apro apri apre apriamo');
+ Words('aprono aperto chiudere chiudo chiudi chiude chiudiamo chiudono chiuso iniziare inizio');
+ Words('inizia iniziano iniziato finire finisco finisci finisce finiamo finiscono finito');
+ Words('cambiare cambio cambia cambiamo cambiano cambiato usare uso usa usiamo usano usato');
+ Words('correggere correggo corregge correggono corretto corretta controllare controllo controlla');
+ Words('controllato salvare salvo salva salvano salvato inviare invio invia inviano inviato');
+ Words('ricevere ricevo riceve ricevono ricevuto tornare torno torna tornano tornato ricordare');
+ Words('ricordo ricorda ricordano ricordato dimenticare dimentico dimentica dimenticato chiedere');
+ Words('chiedo chiedi chiede chiediamo chiedono chiesto rispondere rispondo risponde risposto');
+ Words('scegliere scelgo sceglie scelgono scelto tenere tengo tiene tengono tenuto perdere perso');
+ Words('soprattutto purtroppo infatti invece inoltre comunque dunque allora veramente facilmente');
+ Words('rapidamente lentamente correttamente finalmente completamente probabilmente sicuramente');
+ Words('attenzione azione stazione lezione lezioni emozione emozioni informatica tecnologia');
+ Words('perch'#195#169' affinch'#195#169' poich'#195#169' bench'#195#169' '#195#168' s'#195#172);
+ Words('n'#195#169' s'#195#169' t'#195#168' d'#195#160' gi'#195#160' gi'#195#185' pi'#195#185);
+ Words('l'#195#172' l'#195#160' per'#195#178' cio'#195#168' caff'#195#168);
+End;
+
 Procedure InitDictionary;
 Var A,B: Integer; W: TWord;
 Begin
  WordCount := 0;
  If DictName='fr_FR' Then FrenchWords
  Else If DictName='de_DE' Then GermanWords
- Else If DictName='es_ES' Then SpanishWords Else EnglishWords;
+ Else If DictName='es_ES' Then SpanishWords
+ Else If DictName='it_IT' Then ItalianWords Else EnglishWords;
   { Sort once; binary lookup preserves accented dictionary spellings. }
  For A := 2 To WordCount Do Begin
   W := Dictionary[A]^; B := A-1;
@@ -822,6 +947,21 @@ Begin
   If W='tamvien' Then Preferred := 'tambi'#195#169'n';
   If W='pinguino' Then Preferred := 'ping'#195#188'ino';
   If W='verguenza' Then Preferred := 'verg'#195#188'enza'
+ End Else If DictName='it_IT' Then Begin
+  If W='ciaoo' Then Preferred := 'ciao';
+  If W='mndo' Then Preferred := 'mondo';
+  If W='grazzie' Then Preferred := 'grazie';
+  If W='italaino' Then Preferred := 'italiano';
+  If W='perche' Then Preferred := 'perch'#195#169;
+  If W='caffe' Then Preferred := 'caff'#195#168;
+  If W='piu' Then Preferred := 'pi'#195#185;
+  If W='lunedi' Then Preferred := 'luned'#195#172;
+  If W='citta' Then Preferred := 'citt'#195#160;
+  If W='universita' Then Preferred := 'universit'#195#160;
+  If W='sopratutto' Then Preferred := 'soprattutto';
+  If W='pultroppo' Then Preferred := 'purtroppo';
+  If W='qualita' Then Preferred := 'qualit'#195#160;
+  If W='correzzione' Then Preferred := 'correzione'
  End Else Begin
   If W='teh' Then Preferred := 'the';
   If W='helo' Then Preferred := 'hello';
@@ -944,19 +1084,20 @@ Begin
 End;
 
 Procedure Help;Begin
- WriteLn('HUNSPELL 1.3 - Cette commande permet de lancer le correcteur autonome de '+
-        'francais, anglais, allemand et espagnol.');
+ WriteLn('HUNSPELL 1.4 - Cette commande permet de lancer le correcteur autonome de '+
+        'francais, anglais, allemand, espagnol et italien.');
  WriteLn;
- WriteLn('Syntaxe: hunspell [-d fr_FR|en_US|en_GB|de_DE|es_ES] [-l | -U] document.txt');
+ WriteLn('Syntaxe: hunspell [-d fr_FR|en_US|en_GB|de_DE|es_ES|it_IT] [-l | -U] document.txt');
  WriteLn;
  WriteLn('  -d fr_FR      Lexique francais embarque (valeur par defaut)');
  WriteLn('  -d en_US      Lexique anglais americain embarque');
  WriteLn('  -d en_GB      Lexique anglais britannique embarque');
  WriteLn('  -d de_DE      Lexique allemand embarque');
  WriteLn('  -d es_ES      Lexique espagnol embarque');
+ WriteLn('  -d it_IT      Lexique italien embarque');
  WriteLn('  -l            Afficher seulement les mots suspects');
  WriteLn('  -U            Afficher le texte corrige par la premiere suggestion');
- WriteLn('  -h, --help    Aide');
+ WriteLn('  -h, --help, /? Aide');
  WriteLn('  -v, --version Version');
  WriteLn('  -D            Liste des lexiques');
  WriteLn;
@@ -970,17 +1111,18 @@ BEGIN
  I := 1;
  While I<=ParamCount Do Begin
   Arg := ParamStr(I);
-  If (Arg='--help') Or (Arg='-h') Then Begin
+  If (Arg='--help') Or (Arg='-h') Or (Arg='/?') Then Begin
    Help; Halt(0)
   End
   Else If (Arg='--version') Or (Arg='-v') Then Begin
-   WriteLn('HUNSPELL Pascal 1.3 (implementation independante)'); Halt(0)
+   WriteLn('HUNSPELL Pascal 1.4 (implementation independante)'); Halt(0)
   End Else If Arg='-D' Then Begin
    WriteLn('fr_FR (francais, embarque, lexique reduit)');
    WriteLn('en_US (anglais americain, embarque, lexique reduit)');
    WriteLn('en_GB (anglais britannique, embarque, lexique reduit)');
    WriteLn('de_DE (allemand, embarque, lexique reduit)');
-   WriteLn('es_ES (espagnol, embarque, lexique reduit)'); Halt(0)
+   WriteLn('es_ES (espagnol, embarque, lexique reduit)');
+   WriteLn('it_IT (italien, embarque, lexique reduit)'); Halt(0)
   End
   Else If Arg='-d' Then Begin
    Inc(I); If I>ParamCount Then Fail('dictionnaire manquant apres -d');
@@ -999,8 +1141,8 @@ BEGIN
   Help; Halt(0)
  End;
  If (DictName<>'fr_FR') And (DictName<>'en_US') And (DictName<>'en_GB') And
-    (DictName<>'de_DE') And (DictName<>'es_ES') Then
-  Fail('lexique inconnu: utiliser fr_FR, en_US, en_GB, de_DE ou es_ES');
+    (DictName<>'de_DE') And (DictName<>'es_ES') And (DictName<>'it_IT') Then
+  Fail('lexique inconnu: utiliser fr_FR, en_US, en_GB, de_DE, es_ES ou it_IT');
  If ListOnly And ReplaceWords Then Fail('-l et -U sont incompatibles');
  If FileName='' Then Fail('nom de fichier manquant');
  InitDictionary;

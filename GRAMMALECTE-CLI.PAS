@@ -2,17 +2,21 @@
  @created: 2026
  @website(https://www.gladir.com/correcteur-0)
  @abstract(Target: Turbo Pascal 7, Free Pascal 3.2)
- @description: Vérificateur autonome de français en ligne de commande. }
+ @description: Verificateur autonome de francais en ligne de commande. }
 
 Program GRAMMALECTE_CLI;
 
-{ Vérificateur autonome de français en ligne de commande. Turbo Pascal 7 / Free Pascal (-Mtp).
-  Pas de dictionnaire externe, fichier d'inclusion ou unité nécessaire.
-  Il s'agit d'une implémentation indépendante et volontairement limitée de l'interface en ligne de commande,
+{ Source ASCII : les caracteres non ASCII des chaines utilisent #nnn.
+  Les codes sont les octets UTF-8 : e accent aigu = #195#169.
+  Les entrees et les rapports restent en UTF-8. }
+
+{ Verificateur autonome de francais en ligne de commande. Turbo Pascal 7 / Free Pascal (-Mtp).
+  Pas de dictionnaire externe, fichier d'inclusion ou unite necessaire.
+  Il s'agit d'une implementation independante et volontairement limitee de l'interface en ligne de commande,
   et non d'un port du moteur Grammalecte en amont ou de sa base linguistique.
-  Entrées et rapports : UTF-8. Positions : points de code Unicode à base zéro,
-  fin exclusive ; les paragraphes correspondent ici aux lignes d'entrée physiques.
- Les limites sont vérifiées, jamais tronquées silencieusement. Sortie : 0 succès, 2 échec. }
+  Entrees et rapports : UTF-8. Positions : points de code Unicode a base zero,
+  fin exclusive ; les paragraphes correspondent ici aux lignes d'entree physiques.
+ Les limites sont verifiees, jamais tronquees silencieusement. Sortie : 0 succes, 2 echec. }
 {$IFDEF FPC}
  {$MODE TP}{$H-}
 {$ENDIF}
@@ -113,31 +117,42 @@ Var
  W: TWord;
 Begin
  WordCount := 0;
- Words('a à ai aie aies ait as au aux avec avant après assez aussi autant autre autres aucun aucune');
+ Words('a '#195#160' ai aie aies ait as au aux avec avant apr'#195#168's assez aussi autant autre');
+ Words('autres aucun aucune');
  Words('alors ainsi aller allons allez allez-vous');
- Words('avoir avons avez avaient avais avait ayant eu eue eus eues aurai auras aura aurons aurez auront');
+ Words('avoir avons avez avaient avais avait ayant eu eue eus eues aurai auras aura aurons aurez');
+ Words('auront');
  Words('aurais aurait auraient');
- Words('être suis es est sommes êtes sont étais était étions étiez étaient été serai seras');
+ Words(#195#170'tre suis es est sommes '#195#170'tes sont '#195#169'tais '#195#169'tait');
+ Words(#195#169'tions '#195#169'tiez '#195#169'taient '#195#169't'#195#169' serai seras');
  Words('sera serons serez seront serait seraient sois soit soient');
- Words('bonjour bonsoir salut merci oui non peut-être voici voilà bien mal mieux très trop peu plus');
+ Words('bonjour bonsoir salut merci oui non peut-'#195#170'tre voici voil'#195#160' bien mal mieux');
+ Words('tr'#195#168's trop peu plus');
  Words('moins beaucoup tout tous toute toutes');
- Words('ce cet cette ces celui celle ceux celles ceci cela ça de du des le la les un une et ou où');
+ Words('ce cet cette ces celui celle ceux celles ceci cela '#195#167'a de du des le la les un une et');
+ Words('ou o'#195#185);
  Words('mais donc or ni car si sinon');
- Words('je tu il elle on nous vous ils elles me te se moi toi soi lui leur leurs mon ma mes ton ta tes');
+ Words('je tu il elle on nous vous ils elles me te se moi toi soi lui leur leurs mon ma mes ton ta');
+ Words('tes');
  Words('son sa ses notre nos votre vos');
- Words('dans sur sous par pour sans entre vers chez contre depuis pendant durant malgré selon parmi');
- Words('devant derrière');
- Words('ne pas jamais rien personne aucun seulement encore déjà toujours souvent parfois quelquefois');
- Words('maintenant aujourd’hui demain hier');
- Words('ici là ailleurs partout ensemble quand comme comment pourquoi parce que qui quoi dont lequel');
+ Words('dans sur sous par pour sans entre vers chez contre depuis pendant durant malgr'#195#169);
+ Words('selon parmi');
+ Words('devant derri'#195#168're');
+ Words('ne pas jamais rien personne aucun seulement encore d'#195#169'j'#195#160' toujours souvent');
+ Words('parfois quelquefois');
+ Words('maintenant aujourd'#226#128#153'hui demain hier');
+ Words('ici l'#195#160' ailleurs partout ensemble quand comme comment pourquoi parce que qui quoi');
+ Words('dont lequel');
  Words('laquelle lesquels lesquelles');
- Words('chaque plusieurs quelques quelque même mêmes certain certains certaine certaines tel telle');
+ Words('chaque plusieurs quelques quelque m'#195#170'me m'#195#170'mes certain certains certaine');
+ Words('certaines tel telle');
  Words('tels telles');
  Words('puis peux peut pouvons pouvez peuvent pouvais pouvait pouvaient pu dois doit devons devez');
- Words('doivent devrait devraient dû');
+ Words('doivent devrait devraient d'#195#187);
  Words('fais fait faisons faites font faisais faisait faisaient faire faisant vais vas va vont aller');
  Words('viens vient venons venez viennent venir');
- Words('veux veut voulons voulez veulent vouloir sais sait savons savez savent savoir vois voit voyons');
+ Words('veux veut voulons voulez veulent vouloir sais sait savons savez savent savoir vois voit');
+ Words('voyons');
  Words('voyez voient voir');
  Words('dis dit disent dire donne donnes donnent donner prends prend prendre pense penses pensent');
  Words('penser aime aimes aiment aimer');
@@ -145,52 +160,70 @@ Begin
  Words('travaille travaillent travailler');
  Words('habite habitent habiter regarde regardent regarder trouve trouvent trouver semble semblent');
  Words('sembler reste restent rester');
- Words('faut fallait fallait falloir pleut pleuvoir existe existent existez écrit écris écrivent');
- Words('écrire lire lis lit lisent lu lue');
- Words('bonjour monde texte textes fichier fichiers phrase phrases mot mots mot-clé exemple exemples');
+ Words('faut fallait fallait falloir pleut pleuvoir existe existent existez '#195#169'crit');
+ Words(#195#169'cris '#195#169'crivent');
+ Words(#195#169'crire lire lis lit lisent lu lue');
+ Words('bonjour monde texte textes fichier fichiers phrase phrases mot mots mot-cl'#195#169' exemple');
+ Words('exemples');
  Words('erreur erreurs faute fautes');
- Words('français française françaises langue langues grammaire orthographe correction correcteur');
- Words('correcteurs dictionnaire rapport résultat résultats');
- Words('petit petits petite petites grand grands grande grandes bon bons bonne bonnes mauvais mauvaise');
+ Words('fran'#195#167'ais fran'#195#167'aise fran'#195#167'aises langue langues grammaire orthographe');
+ Words('correction correcteur');
+ Words('correcteurs dictionnaire rapport r'#195#169'sultat r'#195#169'sultats');
+ Words('petit petits petite petites grand grands grande grandes bon bons bonne bonnes mauvais');
+ Words('mauvaise');
  Words('mauvaises beau beaux belle belles');
- Words('nouveau nouveaux nouvelle nouvelles vieux vieille vieilles jeune jeunes joli jolis jolie jolies');
+ Words('nouveau nouveaux nouvelle nouvelles vieux vieille vieilles jeune jeunes joli jolis jolie');
+ Words('jolies');
  Words('heureux heureuse heureuses');
  Words('chat chats chatte chattes chien chiens chienne chiennes animal animaux cheval chevaux oiseau');
  Words('oiseaux poisson poissons');
- Words('maison maisons jardin jardins voiture voitures livre livres école écoles classe classes');
- Words('élève élèves enfant enfants');
- Words('homme hommes femme femmes fille filles garçon garçons ami amis amie amies famille familles');
- Words('père mère frère soeur sœur');
- Words('jour jours nuit nuits matin matins soir soirs semaine semaines mois année années an ans heure');
+ Words('maison maisons jardin jardins voiture voitures livre livres '#195#169'cole '#195#169'coles');
+ Words('classe classes');
+ Words(#195#169'l'#195#168've '#195#169'l'#195#168'ves enfant enfants');
+ Words('homme hommes femme femmes fille filles gar'#195#167'on gar'#195#167'ons ami amis amie amies');
+ Words('famille familles');
+ Words('p'#195#168're m'#195#168're fr'#195#168're soeur s'#197#147'ur');
+ Words('jour jours nuit nuits matin matins soir soirs semaine semaines mois ann'#195#169'e');
+ Words('ann'#195#169'es an ans heure');
  Words('heures minute minutes temps');
- Words('eau pain vin lait café thé pomme pommes fruit fruits repas table tables chaise chaises porte');
- Words('portes fenêtre fenêtres');
- Words('ville villes pays rue rues route routes chemin chemins train trains avion avions vélo bateau');
+ Words('eau pain vin lait caf'#195#169' th'#195#169' pomme pommes fruit fruits repas table tables');
+ Words('chaise chaises porte');
+ Words('portes fen'#195#170'tre fen'#195#170'tres');
+ Words('ville villes pays rue rues route routes chemin chemins train trains avion avions');
+ Words('v'#195#169'lo bateau');
  Words('bateaux travail travaux bureau bureaux');
- Words('ordinateur ordinateurs programme programmes information informations système systèmes');
- Words('données document documents ligne lignes');
+ Words('ordinateur ordinateurs programme programmes information informations syst'#195#168'me');
+ Words('syst'#195#168'mes');
+ Words('donn'#195#169'es document documents ligne lignes');
  Words('important importants importante importantes possible possibles impossible impossibles simple');
  Words('simples difficile difficiles facile faciles');
- Words('vrai vrais vraie vraies faux fausse fausses premier premiers première premières dernier');
- Words('derniers dernière dernières');
- Words('rouge rouges vert verts verte vertes bleu bleus bleue bleues blanc blancs blanche blanches noir');
+ Words('vrai vrais vraie vraies faux fausse fausses premier premiers premi'#195#168're');
+ Words('premi'#195#168'res dernier');
+ Words('derniers derni'#195#168're derni'#195#168'res');
+ Words('rouge rouges vert verts verte vertes bleu bleus bleue bleues blanc blancs blanche blanches');
+ Words('noir');
  Words('noirs noire noires');
  Words('gentil gentils gentille gentilles content contents contente contentes heureux heureuse triste');
- Words('tristes fatigué fatigués fatiguée fatiguées');
+ Words('tristes fatigu'#195#169' fatigu'#195#169's fatigu'#195#169'e fatigu'#195#169'es');
  Words('deux trois quatre cinq six sept huit neuf dix onze douze cent cents mille million millions');
- Words('zéro');
- Words('chose choses problème problèmes question questions réponse réponses raison raisons besoin');
- Words('besoins point points cas manière façon');
- Words('début fin suite partie parties place places côté côtés droit droite gauche centre nord sud');
+ Words('z'#195#169'ro');
+ Words('chose choses probl'#195#168'me probl'#195#168'mes question questions r'#195#169'ponse');
+ Words('r'#195#169'ponses raison raisons besoin');
+ Words('besoins point points cas mani'#195#168're fa'#195#167'on');
+ Words('d'#195#169'but fin suite partie parties place places c'#195#180't'#195#169);
+ Words('c'#195#180't'#195#169's droit droite gauche centre nord sud');
  Words('ouest');
- Words('vraiment simplement rapidement lentement facilement correctement notamment également cependant');
- Words('pourtant ensuite enfin plutôt presque');
+ Words('vraiment simplement rapidement lentement facilement correctement notamment '#195#169'galement');
+ Words('cependant');
+ Words('pourtant ensuite enfin plut'#195#180't presque');
  Words('attention accord accords nom noms verbe verbes sujet sujets adjectif adjectifs pluriel');
- Words('singulier féminin masculin');
- Words('merci monsieur madame bon bonne journée bienvenue bientôt revoir plaisir santé vie mort');
+ Words('singulier f'#195#169'minin masculin');
+ Words('merci monsieur madame bon bonne journ'#195#169'e bienvenue bient'#195#180't revoir plaisir');
+ Words('sant'#195#169' vie mort');
  Words('amour paix');
- Words('pris prise compris comprendre appris apprendre ouvert ouvrir fermé fermer reçu recevoir');
- Words('envoyé envoyer utilisé utiliser');
+ Words('pris prise compris comprendre appris apprendre ouvert ouvrir ferm'#195#169' fermer');
+ Words('re'#195#167'u recevoir');
+ Words('envoy'#195#169' envoyer utilis'#195#169' utiliser');
  Words('besoin envie peur raison tort cours course histoire histoires musique film films photo photos');
  Words('image images');
  Words('l d j c n s t m qu jusqu lorsqu puisqu aujourd hui est-ce');
@@ -340,7 +373,7 @@ Begin
   Correction := '';
   If W='sa' Then Begin
    If (N<TokenCount) Then        If InList(Tokens[N+1]^.Key,'va marche fonctionne suffit')
-   Then Correction := 'ça'
+   Then Correction := #195#167'a'
   End;
   If Adjacent Then Begin
    If (Prev='je') And (W='suis') Then Begin
@@ -351,8 +384,8 @@ Begin
    If (Prev='ils') And InList(W,'son est') Then Correction := 'sont' Else
    If (Prev='elles') And InList(W,'son est') Then Correction := 'sont' Else
    If (Prev='nous') And InList(W,'sont somme') Then Correction := 'sommes' Else
-   If (Prev='vous') And InList(W,'est etes') And (Tokens[N]^.Raw<>'êtes')
-   Then Correction := 'êtes' Else
+   If (Prev='vous') And InList(W,'est etes') And (Tokens[N]^.Raw<>#195#170'tes')
+   Then Correction := #195#170'tes' Else
    If (Prev='je') And InList(W,'manges parles aimes') Then Correction := Copy(W,1,
    Length(W)-1)
    Else If (Prev='tu') And InList(W,'mange parle aime') Then Correction := W+'s' Else
@@ -371,7 +404,7 @@ Begin
    'Verifier le genre du determinant.','');
    If (W='a') And InList(Prev,'vais vas va allons allez vont aller') Then        AddError(
    Tokens[N]^.First,Tokens[N]^.Last,False,'A_ACCENT',
-   'La preposition prend un accent grave.','à');
+   'La preposition prend un accent grave.',#195#160);
    If (N>2) And InList(Tokens[N-2]^.Key,'les des ces mes tes ses nos vos leurs') And
    InList(Prev,'chats chiens enfants filles garcons amis voitures maisons') And
    InList(W,'mange parle aime') Then        AddError(Tokens[N]^.First,Tokens[N]^.Last,
@@ -403,16 +436,16 @@ Begin
   W := Tokens[N]^.Key; S := '';
   If W='bonjours' Then S := 'bonjour' Else
   If W='beaucoups' Then S := 'beaucoup' Else
-  If W='malgres' Then S := 'malgré' Else
+  If W='malgres' Then S := 'malgr'#195#169 Else
   If W='parmis' Then S := 'parmi' Else
-  If W='biensur' Then S := 'bien sûr' Else
-  If Tokens[N]^.Raw='francais' Then S := 'français' Else
-  If Tokens[N]^.Raw='ecole' Then S := 'école' Else
-  If Tokens[N]^.Raw='tres' Then S := 'très' Else
-  If Tokens[N]^.Raw='etre' Then S := 'être' Else
-  If Tokens[N]^.Raw='deja' Then S := 'déjà' Else
-  If Tokens[N]^.Raw='apres' Then S := 'après' Else
-  If Tokens[N]^.Raw='bientot' Then S := 'bientôt';
+  If W='biensur' Then S := 'bien s'#195#187'r' Else
+  If Tokens[N]^.Raw='francais' Then S := 'fran'#195#167'ais' Else
+  If Tokens[N]^.Raw='ecole' Then S := #195#169'cole' Else
+  If Tokens[N]^.Raw='tres' Then S := 'tr'#195#168's' Else
+  If Tokens[N]^.Raw='etre' Then S := #195#170'tre' Else
+  If Tokens[N]^.Raw='deja' Then S := 'd'#195#169'j'#195#160 Else
+  If Tokens[N]^.Raw='apres' Then S := 'apr'#195#168's' Else
+  If Tokens[N]^.Raw='bientot' Then S := 'bient'#195#180't';
   If S<>'' Then      AddError(Tokens[N]^.First,Tokens[N]^.Last,True,'ORTHOGRAPHE',
   'Orthographe a verifier.',S)
   Else If Not Known(W) Then Begin

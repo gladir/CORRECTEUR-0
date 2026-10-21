@@ -1,11 +1,18 @@
+{ @author: Sylvain Maltais (support@gladir.com)
+ @created: 2026
+ @website(https://www.gladir.com/correcteur-0)
+ @abstract(Target: Turbo Pascal 7, Free Pascal 3.2)
+ @description: Vérificateur autonome de français en ligne de commande. }
+
 Program GRAMMALECTE_CLI;
-{ Autonomous French checker. Turbo Pascal 7 / Free Pascal (-Mtp).
-  No external dictionary, include file or unit is needed.
-  This is an independent, deliberately limited implementation of the CLI,
-  not a port of the upstream Grammalecte engine or its linguistic database.
-  Input and reports: UTF-8. Positions: zero-based Unicode code points,
-  end exclusive; paragraphs here correspond to physical input lines.
-  Limits are checked, never silently truncated. Exit: 0 success, 2 failure. }
+
+{ Vérificateur autonome de français en ligne de commande. Turbo Pascal 7 / Free Pascal (-Mtp).
+  Pas de dictionnaire externe, fichier d'inclusion ou unité nécessaire.
+  Il s'agit d'une implémentation indépendante et volontairement limitée de l'interface en ligne de commande,
+  et non d'un port du moteur Grammalecte en amont ou de sa base linguistique.
+  Entrées et rapports : UTF-8. Positions : points de code Unicode à base zéro,
+  fin exclusive ; les paragraphes correspondent ici aux lignes d'entrée physiques.
+ Les limites sont vérifiées, jamais tronquées silencieusement. Sortie : 0 succès, 2 échec. }
 {$IFDEF FPC}
  {$MODE TP}{$H-}
 {$ENDIF}
@@ -106,86 +113,86 @@ Var
  W: TWord;
 Begin
  WordCount := 0;
- Words(
- 'a à ai aie aies ait as au aux avec avant après assez aussi autant autre autres aucun aucune alors ainsi aller allons allez allez-vous');
- Words(
- 'avoir avons avez avaient avais avait ayant eu eue eus eues aurai auras aura aurons aurez auront aurais aurait auraient');
- Words(
- 'être suis es est sommes êtes sont étais était étions étiez étaient été serai seras sera serons serez seront serait seraient sois soit soient');
- Words(
- 'bonjour bonsoir salut merci oui non peut-être voici voilà bien mal mieux très trop peu plus moins beaucoup tout tous toute toutes');
- Words(
- 'ce cet cette ces celui celle ceux celles ceci cela ça de du des le la les un une et ou où mais donc or ni car si sinon');
- Words(
- 'je tu il elle on nous vous ils elles me te se moi toi soi lui leur leurs mon ma mes ton ta tes son sa ses notre nos votre vos');
- Words(
- 'dans sur sous par pour sans entre vers chez contre depuis pendant durant malgré selon parmi devant derrière');
- Words(
- 'ne pas jamais rien personne aucun seulement encore déjà toujours souvent parfois quelquefois maintenant aujourd’hui demain hier');
- Words(
- 'ici là ailleurs partout ensemble quand comme comment pourquoi parce que qui quoi dont lequel laquelle lesquels lesquelles');
- Words(
- 'chaque plusieurs quelques quelque même mêmes certain certains certaine certaines tel telle tels telles');
- Words(
- 'puis peux peut pouvons pouvez peuvent pouvais pouvait pouvaient pu dois doit devons devez doivent devrait devraient dû');
- Words(
- 'fais fait faisons faites font faisais faisait faisaient faire faisant vais vas va vont aller viens vient venons venez viennent venir');
- Words(
- 'veux veut voulons voulez veulent vouloir sais sait savons savez savent savoir vois voit voyons voyez voient voir');
- Words(
- 'dis dit disent dire donne donnes donnent donner prends prend prendre pense penses pensent penser aime aimes aiment aimer');
- Words(
- 'parle parles parlent parlons parlez parler mange manges mangent mangeons mangez manger travaille travaillent travailler');
- Words(
- 'habite habitent habiter regarde regardent regarder trouve trouvent trouver semble semblent sembler reste restent rester');
- Words(
- 'faut fallait fallait falloir pleut pleuvoir existe existent existez écrit écris écrivent écrire lire lis lit lisent lu lue');
- Words(
- 'bonjour monde texte textes fichier fichiers phrase phrases mot mots mot-clé exemple exemples erreur erreurs faute fautes');
- Words(
- 'français française françaises langue langues grammaire orthographe correction correcteur correcteurs dictionnaire rapport résultat résultats');
- Words(
- 'petit petits petite petites grand grands grande grandes bon bons bonne bonnes mauvais mauvaise mauvaises beau beaux belle belles');
- Words(
- 'nouveau nouveaux nouvelle nouvelles vieux vieille vieilles jeune jeunes joli jolis jolie jolies heureux heureuse heureuses');
- Words(
- 'chat chats chatte chattes chien chiens chienne chiennes animal animaux cheval chevaux oiseau oiseaux poisson poissons');
- Words(
- 'maison maisons jardin jardins voiture voitures livre livres école écoles classe classes élève élèves enfant enfants');
- Words(
- 'homme hommes femme femmes fille filles garçon garçons ami amis amie amies famille familles père mère frère soeur sœur');
- Words(
- 'jour jours nuit nuits matin matins soir soirs semaine semaines mois année années an ans heure heures minute minutes temps');
- Words(
- 'eau pain vin lait café thé pomme pommes fruit fruits repas table tables chaise chaises porte portes fenêtre fenêtres');
- Words(
- 'ville villes pays rue rues route routes chemin chemins train trains avion avions vélo bateau bateaux travail travaux bureau bureaux');
- Words(
- 'ordinateur ordinateurs programme programmes information informations système systèmes données document documents ligne lignes');
- Words(
- 'important importants importante importantes possible possibles impossible impossibles simple simples difficile difficiles facile faciles');
- Words(
- 'vrai vrais vraie vraies faux fausse fausses premier premiers première premières dernier derniers dernière dernières');
- Words(
- 'rouge rouges vert verts verte vertes bleu bleus bleue bleues blanc blancs blanche blanches noir noirs noire noires');
- Words(
- 'gentil gentils gentille gentilles content contents contente contentes heureux heureuse triste tristes fatigué fatigués fatiguée fatiguées');
- Words(
- 'deux trois quatre cinq six sept huit neuf dix onze douze cent cents mille million millions zéro');
- Words(
- 'chose choses problème problèmes question questions réponse réponses raison raisons besoin besoins point points cas manière façon');
- Words(
- 'début fin suite partie parties place places côté côtés droit droite gauche centre nord sud ouest');
- Words(
- 'vraiment simplement rapidement lentement facilement correctement notamment également cependant pourtant ensuite enfin plutôt presque');
- Words(
- 'attention accord accords nom noms verbe verbes sujet sujets adjectif adjectifs pluriel singulier féminin masculin');
- Words(
- 'merci monsieur madame bon bonne journée bienvenue bientôt revoir plaisir santé vie mort amour paix');
- Words(
- 'pris prise compris comprendre appris apprendre ouvert ouvrir fermé fermer reçu recevoir envoyé envoyer utilisé utiliser');
- Words(
- 'besoin envie peur raison tort cours course histoire histoires musique film films photo photos image images');
+ Words('a à ai aie aies ait as au aux avec avant après assez aussi autant autre autres aucun aucune');
+ Words('alors ainsi aller allons allez allez-vous');
+ Words('avoir avons avez avaient avais avait ayant eu eue eus eues aurai auras aura aurons aurez auront');
+ Words('aurais aurait auraient');
+ Words('être suis es est sommes êtes sont étais était étions étiez étaient été serai seras');
+ Words('sera serons serez seront serait seraient sois soit soient');
+ Words('bonjour bonsoir salut merci oui non peut-être voici voilà bien mal mieux très trop peu plus');
+ Words('moins beaucoup tout tous toute toutes');
+ Words('ce cet cette ces celui celle ceux celles ceci cela ça de du des le la les un une et ou où');
+ Words('mais donc or ni car si sinon');
+ Words('je tu il elle on nous vous ils elles me te se moi toi soi lui leur leurs mon ma mes ton ta tes');
+ Words('son sa ses notre nos votre vos');
+ Words('dans sur sous par pour sans entre vers chez contre depuis pendant durant malgré selon parmi');
+ Words('devant derrière');
+ Words('ne pas jamais rien personne aucun seulement encore déjà toujours souvent parfois quelquefois');
+ Words('maintenant aujourd’hui demain hier');
+ Words('ici là ailleurs partout ensemble quand comme comment pourquoi parce que qui quoi dont lequel');
+ Words('laquelle lesquels lesquelles');
+ Words('chaque plusieurs quelques quelque même mêmes certain certains certaine certaines tel telle');
+ Words('tels telles');
+ Words('puis peux peut pouvons pouvez peuvent pouvais pouvait pouvaient pu dois doit devons devez');
+ Words('doivent devrait devraient dû');
+ Words('fais fait faisons faites font faisais faisait faisaient faire faisant vais vas va vont aller');
+ Words('viens vient venons venez viennent venir');
+ Words('veux veut voulons voulez veulent vouloir sais sait savons savez savent savoir vois voit voyons');
+ Words('voyez voient voir');
+ Words('dis dit disent dire donne donnes donnent donner prends prend prendre pense penses pensent');
+ Words('penser aime aimes aiment aimer');
+ Words('parle parles parlent parlons parlez parler mange manges mangent mangeons mangez manger');
+ Words('travaille travaillent travailler');
+ Words('habite habitent habiter regarde regardent regarder trouve trouvent trouver semble semblent');
+ Words('sembler reste restent rester');
+ Words('faut fallait fallait falloir pleut pleuvoir existe existent existez écrit écris écrivent');
+ Words('écrire lire lis lit lisent lu lue');
+ Words('bonjour monde texte textes fichier fichiers phrase phrases mot mots mot-clé exemple exemples');
+ Words('erreur erreurs faute fautes');
+ Words('français française françaises langue langues grammaire orthographe correction correcteur');
+ Words('correcteurs dictionnaire rapport résultat résultats');
+ Words('petit petits petite petites grand grands grande grandes bon bons bonne bonnes mauvais mauvaise');
+ Words('mauvaises beau beaux belle belles');
+ Words('nouveau nouveaux nouvelle nouvelles vieux vieille vieilles jeune jeunes joli jolis jolie jolies');
+ Words('heureux heureuse heureuses');
+ Words('chat chats chatte chattes chien chiens chienne chiennes animal animaux cheval chevaux oiseau');
+ Words('oiseaux poisson poissons');
+ Words('maison maisons jardin jardins voiture voitures livre livres école écoles classe classes');
+ Words('élève élèves enfant enfants');
+ Words('homme hommes femme femmes fille filles garçon garçons ami amis amie amies famille familles');
+ Words('père mère frère soeur sœur');
+ Words('jour jours nuit nuits matin matins soir soirs semaine semaines mois année années an ans heure');
+ Words('heures minute minutes temps');
+ Words('eau pain vin lait café thé pomme pommes fruit fruits repas table tables chaise chaises porte');
+ Words('portes fenêtre fenêtres');
+ Words('ville villes pays rue rues route routes chemin chemins train trains avion avions vélo bateau');
+ Words('bateaux travail travaux bureau bureaux');
+ Words('ordinateur ordinateurs programme programmes information informations système systèmes');
+ Words('données document documents ligne lignes');
+ Words('important importants importante importantes possible possibles impossible impossibles simple');
+ Words('simples difficile difficiles facile faciles');
+ Words('vrai vrais vraie vraies faux fausse fausses premier premiers première premières dernier');
+ Words('derniers dernière dernières');
+ Words('rouge rouges vert verts verte vertes bleu bleus bleue bleues blanc blancs blanche blanches noir');
+ Words('noirs noire noires');
+ Words('gentil gentils gentille gentilles content contents contente contentes heureux heureuse triste');
+ Words('tristes fatigué fatigués fatiguée fatiguées');
+ Words('deux trois quatre cinq six sept huit neuf dix onze douze cent cents mille million millions');
+ Words('zéro');
+ Words('chose choses problème problèmes question questions réponse réponses raison raisons besoin');
+ Words('besoins point points cas manière façon');
+ Words('début fin suite partie parties place places côté côtés droit droite gauche centre nord sud');
+ Words('ouest');
+ Words('vraiment simplement rapidement lentement facilement correctement notamment également cependant');
+ Words('pourtant ensuite enfin plutôt presque');
+ Words('attention accord accords nom noms verbe verbes sujet sujets adjectif adjectifs pluriel');
+ Words('singulier féminin masculin');
+ Words('merci monsieur madame bon bonne journée bienvenue bientôt revoir plaisir santé vie mort');
+ Words('amour paix');
+ Words('pris prise compris comprendre appris apprendre ouvert ouvrir fermé fermer reçu recevoir');
+ Words('envoyé envoyer utilisé utiliser');
+ Words('besoin envie peur raison tort cours course histoire histoires musique film films photo photos');
+ Words('image images');
  Words('l d j c n s t m qu jusqu lorsqu puisqu aujourd hui est-ce');
   { Sort once; binary lookup preserves accented dictionary spellings. }
  For A := 2 To WordCount Do Begin

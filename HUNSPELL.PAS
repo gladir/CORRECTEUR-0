@@ -2,7 +2,7 @@
  @created: 2026
  @website(https://www.gladir.com/correcteur-0)
  @abstract(Target: Turbo Pascal 7, Free Pascal 3.2)
- @description: Correcteur orthographique autonome de francais. }
+ @description: Correcteur orthographique autonome de francais et d'anglais. }
 
 Program HUNSPELL;
 
@@ -38,7 +38,7 @@ Var
  UnitText: TUnit;
  I: Integer;
 { Source ASCII only. Numeric strings contain UTF-8 bytes, not DOS codes.
-  Built-in French vocabulary; no .aff/.dic files or external units needed.
+  Built-in French and English vocabularies; no external files needed.
   Independent subset, not the Hunspell engine. No affix/compound engine.
   -U emits corrected UTF-8 on stdout; input bytes are never overwritten.
   Unknown words without a suggestion remain unchanged. Exit 0/2. }
@@ -118,12 +118,8 @@ Begin
  End
 End;
 
-Procedure InitDictionary;
-Var
- A, B: Integer;
- W: TWord;
+Procedure FrenchWords;
 Begin
- WordCount := 0;
  Words(
  'a '#195#160' ai aie aies ait as au aux avec avant apr'#195#168's assez aussi autant autre');
  Words('autres aucun aucune');
@@ -274,6 +270,111 @@ Begin
  'besoin envie peur raison tort cours course histoire histoires musique film films photo photos');
  Words('image images');
  Words('l d j c n s t m qu jusqu lorsqu puisqu aujourd hui est-ce');
+End;
+
+Procedure EnglishWords;
+Begin
+ Words('a an the this that these those i you he she it we they me him her us them');
+ Words('my your his its our their mine yours hers ours theirs myself yourself himself');
+ Words('herself itself ourselves yourselves themselves who whom whose which what');
+ Words('am is are was were be been being have has had having do does did done doing');
+ Words('will would shall should can could may might must ought need dare not no yes');
+ Words('and or but if then else because so although though while until unless since');
+ Words('as than whether either neither both all any some each every much many few');
+ Words('more most less least other another such same only own enough several none');
+ Words('in on at to from by for with without of about above below over under between');
+ Words('through across along around against among before after during into onto upon');
+ Words('up down out off away back here there where when why how now very too also');
+ Words('just still already yet always never ever often sometimes usually again once');
+ Words('twice together apart almost quite rather really well even perhaps maybe');
+ Words('hello hi goodbye welcome please thanks thank sorry excuse okay ok dear');
+ Words('world word words text texts file files document documents line lines page pages');
+ Words('spell spelling checker check checks checked checking correct correction corrections');
+ Words('error errors mistake mistakes suggestion suggestions dictionary dictionaries');
+ Words('english french language languages sentence sentences grammar letter letters');
+ Words('write writes writing written wrote read reads reading reader readers book books');
+ Words('say says said tell tells told speak speaks speaking spoken talk talks talking');
+ Words('go goes going gone went come comes coming came get gets getting got');
+ Words('make makes making made take takes taking taken took give gives giving given gave');
+ Words('see sees seeing seen saw look looks looking looked watch watches watched');
+ Words('know knows knowing known knew think thinks thinking thought understand understood');
+ Words('want wants wanted like likes liked love loves loved hate hates hated');
+ Words('work works working worked use uses using used try tries trying tried');
+ Words('help helps helping helped find finds finding found keep keeps kept');
+ Words('learn learns learned learning teach teaches teaching taught study studies');
+ Words('play plays playing played run runs running ran walk walks walked walking');
+ Words('eat eats eating eaten ate drink drinks drinking drunk drank sleep sleeps slept');
+ Words('live lives lived living move moves moved moving leave leaves leaving left');
+ Words('put puts putting let lets letting set sets setting sit sits sitting sat');
+ Words('stand stands standing stood open opens opened close closes closed');
+ Words('start starts started starting stop stops stopped stopping finish finished');
+ Words('change changes changed changing turn turns turned turning bring brings brought');
+ Words('buy buys buying bought sell sells selling sold pay pays paying paid');
+ Words('send sends sending sent receive receives received receiving believe believes');
+ Words('believed believing achieve achieved achieving become becomes became become');
+ Words('happen happens happened happening occur occurs occurred occurring');
+ Words('remember remembers remembered forget forgets forgot forgotten');
+ Words('worry worries worried worrying hope hopes hoped hoping wish wishes wished');
+ Words('feel feels feeling felt hear hears hearing heard meet meets meeting met');
+ Words('good better best bad worse worst new old young great small big large little');
+ Words('long short tall high low wide narrow early late first last next previous');
+ Words('happy sad easy difficult simple hard possible impossible true false right wrong');
+ Words('beautiful nice pretty ugly important different interesting useful careful');
+ Words('quick fast slow quiet loud clear clean dirty full empty hot cold warm cool');
+ Words('red green blue yellow black white brown orange purple pink grey gray');
+ Words('one two three four five six seven eight nine ten eleven twelve hundred thousand');
+ Words('zero million number numbers time times day days night nights morning evening');
+ Words('today yesterday tomorrow week weeks month months year years hour hours minute');
+ Words('minutes second seconds monday tuesday wednesday thursday friday saturday sunday');
+ Words('january february march april may june july august september october november december');
+ Words('man men woman women child children boy boys girl girls baby babies person people');
+ Words('friend friends family families father mother brother sister son daughter parent parents');
+ Words('name names home homes house houses room rooms door doors window windows');
+ Words('table tables chair chairs bed beds kitchen garden school schools class classes');
+ Words('student students teacher teachers lesson lessons office business company companies');
+ Words('job jobs money price prices shop shops store stores market markets');
+ Words('city cities town towns country countries street streets road roads car cars');
+ Words('bus buses train trains plane planes boat boats bike bikes bicycle bicycles');
+ Words('water food bread milk tea coffee apple apples fruit fruits vegetable vegetables');
+ Words('meat fish egg eggs rice potato potatoes tomato tomatoes cheese sugar salt');
+ Words('cat cats dog dogs horse horses bird birds animal animals tree trees flower flowers');
+ Words('sun moon star stars sky rain snow wind weather sea river mountain mountains');
+ Words('computer computers program programs software hardware system systems data');
+ Words('information message messages email emails internet network networks website websites');
+ Words('screen screens keyboard mouse button buttons folder folders command commands');
+ Words('option options parameter parameters code source output input result results');
+ Words('report reports test tests testing version versions update updates updated');
+ Words('question questions answer answers problem problems solution solutions example examples');
+ Words('idea ideas reason reasons fact facts way ways thing things part parts place places');
+ Words('story stories history music song songs film films movie movies picture pictures');
+ Words('image images photo photos game games team teams life health peace love');
+ Words('public private free available special general common local national international');
+ Words('quickly slowly carefully correctly especially probably actually certainly');
+ Words('really simply usually finally recently suddenly immediately unfortunately');
+ Words('beautifully definitely necessary separate receive address addresses tomorrow');
+ Words('beginning accommodation environment government successful success business');
+ Words('don doesn didn couldn wouldn shouldn isn aren wasn weren hasn haven hadn');
+ Words('mustn needn won shan t s m d re ve ll ain');
+ If DictName='en_GB' Then Begin
+  Words('colour colours coloured colouring favourite favourites neighbour neighbours');
+  Words('centre centres theatre theatres metre metres litre litres honour honours');
+  Words('behaviour organise organises organised organising organisation organisations');
+  Words('recognise recognised realise realised travelling travelled traveller travellers');
+  Words('programme programmes defence licence licences practise practised learnt got')
+ End Else Begin
+  Words('color colors colored coloring favorite favorites neighbor neighbors');
+  Words('center centers theater theaters meter meters liter liters honor honors');
+  Words('behavior organize organizes organized organizing organization organizations');
+  Words('recognize recognized realize realized traveling traveled traveler travelers');
+  Words('defense license licenses practice practiced learned gotten')
+ End
+End;
+
+Procedure InitDictionary;
+Var A,B: Integer; W: TWord;
+Begin
+ WordCount := 0;
+ If DictName='fr_FR' Then FrenchWords Else EnglishWords;
   { Sort once; binary lookup preserves accented dictionary spellings. }
  For A := 2 To WordCount Do Begin
   W := Dictionary[A]^; B := A-1;
@@ -377,11 +478,25 @@ Var
 Begin
  SuggestionCount := 0; W := Lower(W); F := Fold(W);
  Preferred := '';
+ If DictName='fr_FR' Then Begin
  If W='bonjours' Then Preferred := 'bonjour';
  If W='beaucoups' Then Preferred := 'beaucoup';
  If W='malgres' Then Preferred := 'malgr'#195#169;
  If W='parmis' Then Preferred := 'parmi';
  If W='biensur' Then Preferred := 'bien s'#195#187'r';
+ End Else Begin
+  If W='teh' Then Preferred := 'the';
+  If W='helo' Then Preferred := 'hello';
+  If W='wrld' Then Preferred := 'world';
+  If W='recieve' Then Preferred := 'receive';
+  If W='becuase' Then Preferred := 'because';
+  If W='seperate' Then Preferred := 'separate';
+  If W='definately' Then Preferred := 'definitely';
+  If W='adress' Then Preferred := 'address';
+  If W='tomorow' Then Preferred := 'tomorrow';
+  If W='langauge' Then Preferred := 'language';
+  If W='beutiful' Then Preferred := 'beautiful'
+ End;
  If Preferred<>'' Then InsertSuggestion(Preferred,0);
  Limit := 2; If Length(F)<5 Then Limit := 1;
  For N := 1 To WordCount Do Begin
@@ -490,11 +605,13 @@ Begin
 End;
 
 Procedure Help;Begin
- WriteLn('HUNSPELL 1.0 - Cette commande permet de lancer le correcteur francais autonome.');
+ WriteLn('HUNSPELL 1.1 - Cette commande permet de lancer le correcteur autonome de francais et d''anglais.');
  WriteLn;
- WriteLn('Syntaxe: hunspell [-d fr_FR] [-l | -U] document.txt');
+ WriteLn('Syntaxe: hunspell [-d fr_FR|en_US|en_GB] [-l | -U] document.txt');
  WriteLn;
  WriteLn('  -d fr_FR      Lexique francais embarque (valeur par defaut)');
+ WriteLn('  -d en_US      Lexique anglais americain embarque');
+ WriteLn('  -d en_GB      Lexique anglais britannique embarque');
  WriteLn('  -l            Afficher seulement les mots suspects');
  WriteLn('  -U            Afficher le texte corrige par la premiere suggestion');
  WriteLn('  -h, --help    Aide');
@@ -515,9 +632,11 @@ BEGIN
    Help; Halt(0)
   End
   Else If (Arg='--version') Or (Arg='-v') Then Begin
-   WriteLn('HUNSPELL Pascal 1.0 (implementation independante)'); Halt(0)
+   WriteLn('HUNSPELL Pascal 1.1 (implementation independante)'); Halt(0)
   End Else If Arg='-D' Then Begin
-   WriteLn('fr_FR (embarque, lexique reduit)'); Halt(0)
+   WriteLn('fr_FR (francais, embarque, lexique reduit)');
+   WriteLn('en_US (anglais americain, embarque, lexique reduit)');
+   WriteLn('en_GB (anglais britannique, embarque, lexique reduit)'); Halt(0)
   End
   Else If Arg='-d' Then Begin
    Inc(I); If I>ParamCount Then Fail('dictionnaire manquant apres -d');
@@ -535,7 +654,8 @@ BEGIN
  If ParamCount=0 Then Begin
   Help; Halt(0)
  End;
- If DictName<>'fr_FR' Then Fail('seul le lexique fr_FR est disponible');
+ If (DictName<>'fr_FR') And (DictName<>'en_US') And (DictName<>'en_GB') Then
+  Fail('lexique inconnu: utiliser fr_FR, en_US ou en_GB');
  If ListOnly And ReplaceWords Then Fail('-l et -U sont incompatibles');
  If FileName='' Then Fail('nom de fichier manquant');
  InitDictionary;

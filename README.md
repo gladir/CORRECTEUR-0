@@ -59,21 +59,6 @@ Pour essayer la compilation avec Turbo Pascal, après avoir copié le source sou
 
 <pre><b>tpc</b> GRAMCLI.PAS</pre>
 
-<h2>Tests</h2>
-
-<ul>
-  <li>Le script suivant compile le programme et vérifie les rapports, les suggestions, les positions Unicode, les entrées invalides et les limites de traitement. Il contrôle aussi que le source est ASCII et que ses lignes ne dépassent pas 120 octets.</li>
-</ul>
-
-<pre>powershell -ExecutionPolicy Bypass -File tests/grammalecte-cli.ps1</pre>
-
-<ul>
-  <li>Pour HUNSPELL.PAS, le script suivant vérifie la compilation, les trois modes, les suggestions françaises, anglaises, allemandes, espagnoles et italiennes, les accents et les élisions italiennes, les accents espagnols, ñ et ü, les umlauts et le caractère ß, les variantes américaines et britanniques, la sélection du lexique, la casse, les positions, les longues lignes, la conservation du fichier source et le rejet des entrées invalides. Il contrôle également les lignes courtes et le source ASCII. La compilation a été vérifiée avec Free Pascal en mode Turbo Pascal ; Turbo Pascal 7 reste à tester directement.</li>
-</ul>
-
-<pre>powershell -ExecutionPolicy Bypass -File tests/hunspell.ps1</pre>
-
-
 <h2>Licence</h2>
 
 <ul>
